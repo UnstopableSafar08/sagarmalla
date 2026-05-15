@@ -1,9 +1,7 @@
-import { defineConfig } from 'vite'
-import react from '@vitejs/plugin-react'
-
+// vite.config.js
 export default defineConfig({
   plugins: [react()],
-  base: '/portfolio/',
+  base: '/sagarmalla/',   // <-- change this
   resolve: {
     extensions: ['.js', '.jsx', '.json']
   },
