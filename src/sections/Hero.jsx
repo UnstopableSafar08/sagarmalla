@@ -115,7 +115,7 @@ const Hero = () => {
             transition={{ duration: 0.6, delay: 1 }}
           >
             <motion.a
-              href="/portfolio/sagarMalla_resume.pdf"
+              href="/sagarMalla_resume.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="glow-button flex items-center gap-2"

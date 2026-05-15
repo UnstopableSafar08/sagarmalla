@@ -129,27 +129,27 @@ export const certifications = [
   {
     title: 'AWS Solution Architect Associate',
     issuer: 'Broadway Infosys Pvt. Ltd.',
-    image: '/portfolio/certifications/AWS_SAA.jpg',
+    image: '/certifications/AWS_SAA.jpg',
   },
   {
     title: 'Data Science and Machine Learning with Python',
     issuer: 'Deerwalk',
-    image: '/portfolio/certifications/dwit-dataScience.png',
+    image: '/certifications/dwit-dataScience.png',
   },
   {
     title: 'Cisco Certified Network Associate (CCNA-V3)',
     issuer: 'NIT',
-    image: '/portfolio/certifications/CCNA.jpg',
+    image: '/certifications/CCNA.jpg',
   },
   {
     title: 'DevSecOps Training Certificate',
     issuer: 'eSewa Ltd.',
-    image: '/portfolio/certifications/devSecOps-training.png',
+    image: '/certifications/devSecOps-training.png',
   },
   {
     title: 'WAF Training Certificate',
     issuer: 'eSewa Ltd.',
-    image: '/portfolio/certifications/WAF-training.png',
+    image: '/certifications/WAF-training.png',
   },
 ];
 

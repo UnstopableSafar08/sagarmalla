@@ -60,7 +60,7 @@ const About = () => {
                 >
                   <div className="w-36 h-36 rounded-full bg-gradient-to-br from-primary via-secondary to-accent p-1 shadow-xl shadow-primary/20">
                     <div className="w-full h-full rounded-full bg-dark flex items-center justify-center overflow-hidden">
-                    <img src="/portfolio/sagarmalla.gif" alt={personalInfo.name} className="w-full h-full object-cover" />
+                    <img src="/sagarmalla.gif" alt={personalInfo.name} className="w-full h-full object-cover" />
                   </div>
                   </div>
                   <div className="absolute -bottom-2 -right-2 w-10 h-10 bg-green-500 rounded-full flex items-center justify-center border-4 border-dark">
