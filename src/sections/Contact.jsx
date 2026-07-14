@@ -13,9 +13,32 @@ const Contact = () => {
   });
   const [isSending, setIsSending] = useState(false);
   const [status, setStatus] = useState({ type: '', message: '' });
+  const [formErrors, setFormErrors] = useState({});
+
+  const validateForm = () => {
+    const errors = {};
+
+    if (formData.name.trim().length < 6) {
+      errors.name = 'Name must be at least 6 characters (including spaces)';
+    }
+
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      errors.email = 'Please enter a valid email address';
+    }
+
+    const words = formData.message.trim().split(/\s+/).filter(w => w.length > 0);
+    if (words.length < 3) {
+      errors.message = 'Message must contain at least a few words';
+    }
+
+    setFormErrors(errors);
+    return Object.keys(errors).length === 0;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validateForm()) return;
     setIsSending(true);
     setStatus({ type: '', message: '' });
 
@@ -39,6 +62,7 @@ const Contact = () => {
         message: 'Email(Message) sent successfully! I\'ll get back to you soon.'
       });
       setFormData({ name: '', email: '', message: '' });
+      setFormErrors({});
     } catch (error) {
       setStatus({
         type: 'error',
@@ -144,32 +168,53 @@ const Contact = () => {
               <input
                 type="text"
                 value={formData.name}
-                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full px-4 py-3 bg-glass border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-primary focus:outline-none transition-colors"
-                placeholder="Your name"
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, name: e.target.value });
+                  if (formErrors.name) setFormErrors({ ...formErrors, name: '' });
+                }}
+                className={`w-full px-4 py-3 bg-glass border rounded-xl text-white placeholder-gray-500 focus:outline-none transition-colors ${
+                  formErrors.name ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-primary'
+                }`}
+                placeholder="Your name (min 6 characters)"
               />
+              {formErrors.name && (
+                <p className="text-red-400 text-xs mt-1.5">{formErrors.name}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-2">Your Email ID</label>
               <input
                 type="email"
                 value={formData.email}
-                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full px-4 py-3 bg-glass border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-primary focus:outline-none transition-colors"
+                onChange={(e) => {
+                  setFormData({ ...formData, email: e.target.value });
+                  if (formErrors.email) setFormErrors({ ...formErrors, email: '' });
+                }}
+                className={`w-full px-4 py-3 bg-glass border rounded-xl text-white placeholder-gray-500 focus:outline-none transition-colors ${
+                  formErrors.email ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-primary'
+                }`}
                 placeholder="your.email@example.com"
-                required
               />
+              {formErrors.email && (
+                <p className="text-red-400 text-xs mt-1.5">{formErrors.email}</p>
+              )}
             </div>
             <div>
               <label className="block text-sm text-gray-400 mb-2">Message</label>
               <textarea
                 value={formData.message}
-                onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-                className="w-full px-4 py-3 bg-glass border border-white/10 rounded-xl text-white placeholder-gray-500 focus:border-primary focus:outline-none transition-colors min-h-[150px] resize-none"
-                placeholder="Your message..."
-                required
+                onChange={(e) => {
+                  setFormData({ ...formData, message: e.target.value });
+                  if (formErrors.message) setFormErrors({ ...formErrors, message: '' });
+                }}
+                className={`w-full px-4 py-3 bg-glass border rounded-xl text-white placeholder-gray-500 focus:outline-none transition-colors min-h-[150px] resize-none ${
+                  formErrors.message ? 'border-red-500 focus:border-red-500' : 'border-white/10 focus:border-primary'
+                }`}
+                placeholder="Your message... (at least a few words)"
               />
+              {formErrors.message && (
+                <p className="text-red-400 text-xs mt-1.5">{formErrors.message}</p>
+              )}
             </div>
 
             {status.message && (
