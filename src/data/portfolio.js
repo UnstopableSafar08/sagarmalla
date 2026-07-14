@@ -212,6 +212,13 @@ export const projects = [
     link: '#',
     demo: 'https://notes.sagarmalla.info.np',
   },
+  {
+    title: 'Todo Checklist',
+    description: 'Simple and clean todo checklist app for daily task management — built to stay organized and get things done.',
+    tech: ['React', 'Tailwind CSS'],
+    link: '#',
+    demo: 'https://todo.sagarmalla.info.np',
+  },
 ];
 
 export const interests = [
