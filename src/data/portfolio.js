@@ -74,7 +74,7 @@ export const skills = [
   },
   {
     category: 'Security',
-    items: ['SSL/TLS', 'WAF', 'DDoS Protection', 'IAM', 'Vault'],
+    items: ['SSL/TLS', 'WAF', 'DDoS Protection', 'IAM', 'HashiCorp Vault'],
     description: 'Infrastructure security & access management',
   },
 ];
