@@ -1,6 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 
+const purpleGradients = [
+  '#818cf8',
+  '#c084fc',
+  '#a855f7',
+  '#7c3aed',
+  '#818cf8',
+];
+
 const CustomCursor = () => {
   const cursorRef = useRef(null);
   const cursorX = useMotionValue(0);
@@ -11,6 +19,8 @@ const CustomCursor = () => {
   const springConfig = { damping: 20, stiffness: 300, mass: 0.5 };
   const springX = useSpring(cursorX, springConfig);
   const springY = useSpring(cursorY, springConfig);
+  const ringSpringX = useSpring(cursorX, { damping: 15, stiffness: 200, mass: 0.8 });
+  const ringSpringY = useSpring(cursorY, { damping: 15, stiffness: 200, mass: 0.8 });
 
   useEffect(() => {
     const updatePosition = (e) => {
@@ -48,49 +58,70 @@ const CustomCursor = () => {
 
   return (
     <>
-      {/* Main cursor dot */}
+      {/* Main cursor dot with animated purple gradient */}
       <motion.div
         ref={cursorRef}
-        className="fixed w-3 h-3 bg-gradient-to-br from-primary to-accent rounded-full pointer-events-none z-50"
+        className="fixed w-3 h-3 rounded-full pointer-events-none z-50"
         style={{
           x: springX,
           y: springY,
           marginLeft: -6,
           marginTop: -6,
+          background: 'linear-gradient(135deg, #818cf8, #c084fc, #a855f7, #7c3aed, #818cf8)',
+          backgroundSize: '400% 400%',
         }}
         animate={{
           scale: isClicking ? 0.5 : isHovering ? 1.5 : 1,
+          backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
         }}
-        transition={{ duration: 0.15 }}
+        transition={{
+          scale: { duration: 0.15 },
+          backgroundPosition: { duration: 3, repeat: Infinity, ease: 'linear' },
+        }}
       />
 
-      {/* Outer ring with delay */}
+      {/* Outer ring with animated gradient border */}
       <motion.div
-        className="fixed w-12 h-12 border-2 border-primary rounded-full pointer-events-none z-50"
+        className="fixed pointer-events-none z-50"
         style={{
-          x: springX,
-          y: springY,
+          x: ringSpringX,
+          y: ringSpringY,
           marginLeft: -24,
           marginTop: -24,
+          width: 48,
+          height: 48,
+          borderRadius: '50%',
+          background: 'linear-gradient(135deg, #818cf8, #c084fc, #a855f7, #7c3aed)',
+          backgroundSize: '400% 400%',
+          padding: 2,
+          WebkitMask: 'radial-gradient(circle at center, transparent 21px, black 22px)',
+          mask: 'radial-gradient(circle at center, transparent 21px, black 22px)',
         }}
         animate={{
           scale: isClicking ? 0.7 : isHovering ? 1.8 : 1,
-          opacity: isClicking ? 0.8 : isHovering ? 0.6 : 0.3,
-          borderColor: isHovering ? '#c084fc' : '#818cf8',
+          opacity: isClicking ? 0.8 : isHovering ? 0.7 : 0.4,
+          rotate: 360,
+          backgroundPosition: ['0% 0%', '100% 100%', '0% 0%'],
         }}
-        transition={{ duration: 0.2 }}
+        transition={{
+          scale: { duration: 0.2 },
+          opacity: { duration: 0.2 },
+          rotate: { duration: 4, repeat: Infinity, ease: 'linear' },
+          backgroundPosition: { duration: 3, repeat: Infinity, ease: 'linear' },
+        }}
       />
 
       {/* Trail particles */}
       {[...Array(3)].map((_, i) => (
         <motion.div
           key={i}
-          className="fixed w-2 h-2 bg-secondary/40 rounded-full pointer-events-none z-50"
+          className="fixed w-2 h-2 rounded-full pointer-events-none z-50"
           style={{
             x: springX,
             y: springY,
             marginLeft: -4 - (i * 6),
             marginTop: -4 - (i * 6),
+            background: `linear-gradient(135deg, ${purpleGradients[i]}, ${purpleGradients[i + 1]})`,
           }}
           animate={{
             scale: 1 - i * 0.3,
@@ -106,16 +137,17 @@ const CustomCursor = () => {
       {/* Click burst effect */}
       {isClicking && (
         <motion.div
-          className="fixed w-16 h-16 border border-accent rounded-full pointer-events-none z-50"
+          className="fixed w-16 h-16 rounded-full pointer-events-none z-50"
           style={{
             x: springX,
             y: springY,
             marginLeft: -32,
             marginTop: -32,
+            border: '2px solid #c084fc',
           }}
           initial={{ scale: 0.5, opacity: 0.8 }}
-          animate={{ scale: 2, opacity: 0 }}
-          transition={{ duration: 0.3 }}
+          animate={{ scale: 2.5, opacity: 0 }}
+          transition={{ duration: 0.4 }}
         />
       )}
     </>
